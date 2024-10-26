@@ -1,32 +1,43 @@
-﻿using Domain;
-using Microsoft.AspNetCore.Http;
+﻿using Application.Activities;
+using Domain;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Persistence;
-using SQLitePCL;
 
 namespace API.Controllers
 {
     public class ActivitiesController : BaseAPIController
     {
-        private readonly DataContext _context;
-        public ActivitiesController(DataContext context)
-        {
-            _context = context;
-        }
-
         [HttpGet]
         public async Task<ActionResult<List<Activity>>> GetActivities()
         {
-            return await _context.Activities.ToListAsync();
+            return await Mediator.Send(new List.Query());
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<Activity>> GetActivity(Guid id)
         {
-            var activity = await _context.Activities.FindAsync(id);
-            if(activity == null) { return null; }
-            return activity;
+            return await Mediator.Send(new Detail.Query { Id = id });
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> CreateActivity(Activity activity)
+        {
+            await Mediator.Send(new Create.Command { Activity = activity });
+            return Ok();
+        }
+
+        [HttpPut("{id}")]
+        public async Task<ActionResult> EditActivity(Guid id, Activity activity)
+        {
+            activity.Id = id;
+            await Mediator.Send(new Edit.Command { Activity = activity });
+            return Ok();
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteActivity(Guid id)
+        {
+            await Mediator.Send(new Delete.Command { Id = id });
+            return Ok();
         }
     }
 }
