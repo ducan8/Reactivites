@@ -10,16 +10,26 @@ import {
 import { useStore } from "../../../app/models/store";
 import LoadingComponent from "../../../app/layout/LoadingComponent";
 import { observer } from "mobx-react-lite";
+import { useEffect } from "react";
+import { Link, useParams } from "react-router-dom";
 
 export default observer(function ActivityDetails() {
   const { activityStore } = useStore();
-  const { cancelSelectActivity, openForm, selectedActivity } = activityStore;
-  const activity = selectedActivity;
+  const {
+    selectedActivity: activity,
+    loadActivity,
+    loadingInitial,
+  } = activityStore;
+  const { id } = useParams();
 
-  if (!activity) return <LoadingComponent />;
+  useEffect(() => {
+    if (id) loadActivity(id);
+  }, [id, loadActivity]);
+
+  if (loadingInitial || !activity) return <LoadingComponent />;
 
   return (
-    <Card>
+    <Card fluid>
       <Image
         src={`/assets/categoryImages/${activity.category}.jpg`}
         wrapped
@@ -35,13 +45,15 @@ export default observer(function ActivityDetails() {
       <CardContent extra>
         <Button.Group widths="2">
           <Button
-            onClick={() => openForm(activity.id)}
+            as={Link}
+            to={`/manage/${activity.id}`}
             basic
             color="blue"
             content="Edit"
           />
           <Button
-            onClick={() => cancelSelectActivity()}
+            as={Link}
+            to="/activities"
             basic
             color="grey"
             content="Cancel"
