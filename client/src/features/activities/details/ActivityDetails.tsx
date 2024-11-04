@@ -7,19 +7,17 @@ import {
   Image,
   Button,
 } from "semantic-ui-react";
-import { Activity } from "../../../app/models/activity";
+import { useStore } from "../../../app/models/store";
+import LoadingComponent from "../../../app/layout/LoadingComponent";
+import { observer } from "mobx-react-lite";
 
-interface Props {
-  activity: Activity;
-  cancelSelectActivity: () => void;
-  openForm: (id: string) => void;
-}
+export default observer(function ActivityDetails() {
+  const { activityStore } = useStore();
+  const { cancelSelectActivity, openForm, selectedActivity } = activityStore;
+  const activity = selectedActivity;
 
-export default function ActivityDetails({
-  activity,
-  cancelSelectActivity,
-  openForm,
-}: Props) {
+  if (!activity) return <LoadingComponent />;
+
   return (
     <Card>
       <Image
@@ -52,4 +50,4 @@ export default function ActivityDetails({
       </CardContent>
     </Card>
   );
-}
+});
