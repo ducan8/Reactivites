@@ -25,7 +25,7 @@ axios.interceptors.response.use(
           config.method === "get" &&
           Object.prototype.hasOwnProperty.call(data.errors, "id")
         ) {
-          console.log("data: ", data);
+          console.log("check agent.ts -> data: ", data);
           // router.navigate("/not-found");
         }
         if (data.errors) {

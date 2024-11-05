@@ -20,7 +20,7 @@ export default observer(function ActivityDetails() {
 
   useEffect(() => {
     if (id) loadActivity(id);
-    console.log("activity ne: ", activity);
+    console.log("check ActivityDetails.tsx -> activity: ", activity);
   }, [id, loadActivity]);
 
   if (loadingInitial || !activity) return <LoadingComponent />;
