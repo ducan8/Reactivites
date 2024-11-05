@@ -1,6 +1,6 @@
 import { Grid } from "semantic-ui-react";
 import ActivityList from "./ActivityList";
-import { useStore } from "../../../app/models/store";
+import { useStore } from "../../../app/stores/store";
 import { observer } from "mobx-react-lite";
 import { useEffect } from "react";
 import LoadingComponent from "../../../app/layout/LoadingComponent";
