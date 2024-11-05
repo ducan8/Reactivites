@@ -1,18 +1,9 @@
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardMeta,
-  CardDescription,
-  Image,
-  Button,
-  Grid,
-} from "semantic-ui-react";
+import { Grid } from "semantic-ui-react";
 import { useStore } from "../../../app/stores/store";
 import LoadingComponent from "../../../app/layout/LoadingComponent";
 import { observer } from "mobx-react-lite";
 import { useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import ActivityDetailedHeader from "./ActivityDetailedHeader";
 import ActivityDetailedInfo from "./ActivityDetailedInfo";
 import ActivityDetailedChat from "./ActivityDetailedChat";
@@ -29,6 +20,7 @@ export default observer(function ActivityDetails() {
 
   useEffect(() => {
     if (id) loadActivity(id);
+    console.log("activity ne: ", activity);
   }, [id, loadActivity]);
 
   if (loadingInitial || !activity) return <LoadingComponent />;

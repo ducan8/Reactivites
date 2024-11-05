@@ -24,8 +24,10 @@ axios.interceptors.response.use(
         if (
           config.method === "get" &&
           Object.prototype.hasOwnProperty.call(data.errors, "id")
-        )
-          router.navigate("/not-found");
+        ) {
+          console.log("data: ", data);
+          // router.navigate("/not-found");
+        }
         if (data.errors) {
           const modalStateErrors = [];
           for (const key in data.errors) {

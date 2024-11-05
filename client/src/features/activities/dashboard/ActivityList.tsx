@@ -3,15 +3,11 @@ import { useStore } from "../../../app/stores/store";
 import { observer } from "mobx-react-lite";
 import ActivityListItem from "./ActivityListItem";
 import { Fragment } from "react/jsx-runtime";
-import { useEffect } from "react";
 
 export default observer(function ActivityList() {
   const { activityStore } = useStore();
   const { groupedActivities } = activityStore;
 
-  useEffect(() => {
-    console.log("group activities: ", groupedActivities);
-  }, []);
   return (
     <>
       {groupedActivities.map(([group, activities]) => {
