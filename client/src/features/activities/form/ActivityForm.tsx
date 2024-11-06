@@ -42,7 +42,6 @@ export default observer(function ActivityForm() {
   useEffect(() => {
     if (id) {
       loadActivity(id).then((activity) => setActivity(activity!));
-      console.log("check ActivityForm.tsx -> activity: ", activity);
     }
   }, [id, loadActivity, activity]);
 

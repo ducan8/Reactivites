@@ -26,7 +26,7 @@ axios.interceptors.response.use(
           Object.prototype.hasOwnProperty.call(data.errors, "id")
         ) {
           console.log("check agent.ts -> data: ", data);
-          // router.navigate("/not-found");
+          router.navigate("/not-found");
         }
         if (data.errors) {
           const modalStateErrors = [];
