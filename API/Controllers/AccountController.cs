@@ -28,7 +28,7 @@ namespace API.Controllers
         public async Task<ActionResult<UserDto>> Login(LoginDto loginDto)
         {
             var user = await _userManager.FindByEmailAsync(loginDto.Email);
-            if (user == null) return Unauthorized();
+            if (user == null) return Unauthorized("username or password is not exists");
 
             var result = await _userManager.CheckPasswordAsync(user, loginDto.Password);
 
@@ -36,7 +36,7 @@ namespace API.Controllers
             {
                 return CreateUserDto(user);
             }
-            return Unauthorized();
+            return Unauthorized("username or password is not exists");
         }
 
         [AllowAnonymous]

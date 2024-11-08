@@ -1,5 +1,5 @@
 import { Button, Header, Segment } from "semantic-ui-react";
-import { Activity } from "../../../app/models/activity";
+import { ActivityFormValues } from "../../../app/models/activity";
 import { useEffect, useState } from "react";
 import { useStore } from "../../../app/stores/store";
 import { observer } from "mobx-react-lite";
@@ -19,16 +19,11 @@ export default observer(function ActivityForm() {
   const { loading, createActivity, updateActivity, loadActivity } =
     activityStore;
   const { id } = useParams();
+  const navigate = useNavigate();
 
-  const [activity, setActivity] = useState<Activity>({
-    id: "",
-    title: "",
-    description: "",
-    category: "",
-    date: null,
-    city: "",
-    venue: "",
-  });
+  const [activity, setActivity] = useState<ActivityFormValues>(
+    new ActivityFormValues()
+  );
 
   const validationSchema = Yup.object({
     title: Yup.string().required("The title is required"),
@@ -41,13 +36,13 @@ export default observer(function ActivityForm() {
 
   useEffect(() => {
     if (id) {
-      loadActivity(id).then((activity) => setActivity(activity!));
+      loadActivity(id).then((activity) =>
+        setActivity(new ActivityFormValues(activity))
+      );
     }
-  }, [id, loadActivity, activity]);
+  }, [id, loadActivity]);
 
-  const navigate = useNavigate();
-
-  function handleFormSubmit(activity: Activity) {
+  function handleFormSubmit(activity: ActivityFormValues) {
     if (activity.id) {
       updateActivity(activity).then(() =>
         navigate(`/activities/${activity.id}`)
@@ -96,7 +91,7 @@ export default observer(function ActivityForm() {
             <MyTextInput placeholder={"City"} name={"city"} />
 
             <Button
-              loading={loading}
+              loading={isSubmitting}
               disabled={isSubmitting || !dirty || !isValid}
               floated="right"
               positive
