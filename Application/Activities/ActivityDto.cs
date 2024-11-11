@@ -1,4 +1,5 @@
-﻿using Application.Profiles;
+﻿using Application.Activities;
+using Application.Profiles;
 
 namespace Application.DTOs
 {
@@ -13,6 +14,6 @@ namespace Application.DTOs
         public string Venue { get; set; }
         public string HostUsername { get; set; }
         public bool IsCancelled { get; set; }
-        public ICollection<Profile> Attendees { get; set; }
+        public ICollection<AttendeeDto> Attendees { get; set; }
     }
 }

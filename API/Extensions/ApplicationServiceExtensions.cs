@@ -3,6 +3,7 @@ using Application.Core;
 using Application.Interfaces;
 using FluentValidation;
 using FluentValidation.AspNetCore;
+using Infastructure.Photos;
 using Infastructure.Security;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
@@ -36,6 +37,8 @@ namespace API.Extensions
             services.AddValidatorsFromAssemblyContaining<Create>();
             services.AddHttpContextAccessor();
             services.AddScoped<IUserAccessor, UserAccessor>();
+            services.Configure<CloudinarySettings>(config.GetSection("Cloudinary"));
+            services.AddScoped<IPhoroAccessor, PhotoAccessor>();
 
             return services;
         }
