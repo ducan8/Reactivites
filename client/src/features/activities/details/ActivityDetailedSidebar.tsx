@@ -9,6 +9,7 @@ interface Props {
 
 export default observer(function ActivityDetailedSidebar({ activity }: Props) {
   const { attendees, host } = activity;
+  if (!attendees) return null;
 
   return (
     <>
@@ -43,7 +44,9 @@ export default observer(function ActivityDetailedSidebar({ activity }: Props) {
                     {attendee.username}
                   </Link>
                 </Item.Header>
-                <Item.Extra style={{ color: "orange" }}>Following</Item.Extra>
+                {attendee.following && (
+                  <Item.Extra style={{ color: "orange" }}>Following</Item.Extra>
+                )}
               </Item.Content>
             </Item>
           ))}
