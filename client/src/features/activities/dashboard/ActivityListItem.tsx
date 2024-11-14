@@ -53,7 +53,7 @@ export default function ActivityListItem({ activity }: Props) {
                 )}
                 {activity.isGoing && !activity.isHost && (
                   <Item.Description>
-                    <Label basic color="orange">
+                    <Label basic color="green">
                       You are going to this activity
                     </Label>
                   </Item.Description>
